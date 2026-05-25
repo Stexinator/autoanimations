@@ -9,13 +9,14 @@ export async function proToTemp(handler, animationData, templateDocument) {
     const targetFX = animationData.targetFX;
     const macro = animationData.macro;
 
-    const template = handler.templateData ? handler.templateData : templateDocument//canvas.templates.placeables[canvas.templates.placeables.length - 1];
+    const template = handler.templateData ? handler.templateData : templateDocument;
     const sourceToken = handler.sourceToken;
 
     let aaSeq = await new Sequence(handler.sequenceData)
     if (data.projectile.options.removeTemplate) {
         aaSeq.thenDo(function () {
-            canvas.scene.deleteEmbeddedDocuments("MeasuredTemplate", [template.id])
+            const docName = template?.documentName || "MeasuredTemplate";
+            canvas.scene.deleteEmbeddedDocuments(docName, [template.id]);
         })
     }
 

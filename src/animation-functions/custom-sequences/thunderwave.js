@@ -4,8 +4,8 @@ export async function thunderwave(handler, animationData, config) {
 
     const sourceToken = handler.sourceToken;
     
-    const template = handler.templateData ? handler.templateData : config;
-    // const templateData = config ? config || {} : template.document || {};
+    const templateData = handler.templateData ? handler.templateData : config;
+    const template = templateData?.document || templateData;
     const templateDistance = template?.shapes?.[0]?.measuredSegments?.[0]?.distance;
     const trueSize = Math.sqrt(Math.pow(templateDistance, 2) / 2);
 
@@ -62,7 +62,8 @@ export async function thunderwave(handler, animationData, config) {
     }
 
     if (data.options.removeTemplate) {
-        canvas.scene.deleteEmbeddedDocuments("MeasuredTemplate", [template.id])
+        const docName = template?.documentName || "MeasuredTemplate";
+        canvas.scene.deleteEmbeddedDocuments(docName, [template.id]);
     }
 
     // Macro if Awaiting Animation. This will respect the Delay/Wait options in the Animation chains

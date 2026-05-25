@@ -23,7 +23,8 @@ export async function templatefx(handler, animationData, templateDocument) {
     if ((data.options.persistent && data.options.persistType !== "attachtemplate") || !data.options.persistent) {
         aaSeq.thenDo(function () {
             if (data.options.removeTemplate) {
-                canvas.scene.deleteEmbeddedDocuments("MeasuredTemplate", [template.id])
+                const docName = template?.documentName || "MeasuredTemplate";
+                canvas.scene.deleteEmbeddedDocuments(docName, [template.id]);
             }
         })
     }

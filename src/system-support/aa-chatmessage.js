@@ -37,6 +37,7 @@ function funkyTest(msg) {
     const elActorID = element.querySelector("[data-actor-id]")?.getAttribute("data-actor-id");
     const elTokenUUID = element.querySelector("[data-token-uuid]")?.getAttribute("data-token-uuid");
     const elItemID = element.querySelector("[data-item-id]")?.getAttribute("data-item-id");
+    const elItemName = element.querySelector(".item-name")?.textContent;
 
     const systemFlags = msg.flags[game.system.id] || {};
     const flagItemID = systemFlags.itemId;
@@ -44,9 +45,9 @@ function funkyTest(msg) {
     const flagTokenUUID = systemFlags.tokenUuid;
     const flagItemUUID = systemFlags.itemUuid;
 
-
     const token = fromUuidSync(flagTokenUUID || elTokenUUID) || canvas.tokens.get(msg.speaker?.token);
-    let item = fromUuidSync(flagItemUUID || elItemUUID) || msg.item || msg.itemSource
+    const itemFromName = token?.actor?.items?.getName(elItemName);
+    let item = fromUuidSync(flagItemUUID || elItemUUID) || msg.item || msg.itemSource || itemFromName;
     const actor = item?.actor || token?.actor || game.actors.get(flagActorID || elActorID);
 
     if(!item) item = actor?.items.get(flagItemID || elItemID || msg.rolls?.[0]?.options?.itemId);

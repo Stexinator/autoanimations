@@ -75,7 +75,9 @@ export async function range(handler, animationData) {
         if (data.options.elevation === 0) {
             nextSeq.belowTokens(true)
         } else {
-            nextSeq.elevation(handler.elevation(sourceToken, data.options.isAbsolute, data.options.elevation), { absolute: data.options.isAbsolute })
+            const sourceLevel = (sourceToken?.document ?? sourceToken)?.level;
+            const targetLevel = (currentTarget?.token?.document ?? currentTarget?.token)?.level;
+            nextSeq.onLevels([sourceLevel, targetLevel]);
         }
         nextSeq.zIndex(data.options.zIndex)
         if (data.options.tint) {

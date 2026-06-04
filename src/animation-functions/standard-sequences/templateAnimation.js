@@ -65,7 +65,7 @@ export async function templatefx(handler, animationData, templateDocument) {
         const templateSeq = aaSeq.effect();
         if (templateType === 'cone' || templateType === 'line') {
             const trueHeight = templateType === 'cone' ? templateDistance : template.shapes[0].width * 2 / canvas.dimensions.distancePixels;
-            setPrimary(templateSeq)
+            setPrimary(templateSeq, sourceToken);
             templateSeq.size({
                 width: templateDistance * canvas.dimensions.distancePixels * data.options.scale.x,
                 height: trueHeight * canvas.dimensions.distancePixels * data.options.scale.y,
@@ -99,7 +99,7 @@ export async function templatefx(handler, animationData, templateDocument) {
             } else {
                 trueSize = templateDistance * 2;
             }
-            setPrimary(templateSeq)
+            setPrimary(templateSeq, sourceToken);
             templateSeq.size({
                 width: canvas.grid.size * (trueSize / canvas.dimensions.distance) * data.options.scale.x,
                 height: canvas.grid.size * (trueSize / canvas.dimensions.distance) * data.options.scale.y,
@@ -161,8 +161,7 @@ export async function templatefx(handler, animationData, templateDocument) {
     await wait(500)
     Hooks.callAll("aa.animationEnd", sourceToken, "no-target")
 
-
-    function setPrimary(seq) {
+    function setPrimary(seq, token) {
         seq.anchor(convertToXY(data.options.anchor))
         seq.file(data.path.file)
         seq.opacity(data.options.opacity)
@@ -170,7 +169,8 @@ export async function templatefx(handler, animationData, templateDocument) {
         if (data.options.elevation === 0) {
             seq.belowTokens(true)
         } else {
-            seq.elevation(handler.elevation(sourceToken, data.options.isAbsolute, data.options.elevation), { absolute: data.options.isAbsolute })
+            const sourceLevel = (token?.document ?? token)?.level;
+            seq.onLevels([sourceLevel]);
         }
         seq.zIndex(data.options.zIndex)
         seq.rotate(data.options.rotate)

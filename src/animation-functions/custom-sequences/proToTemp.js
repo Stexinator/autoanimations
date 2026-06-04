@@ -41,6 +41,9 @@ export async function proToTemp(handler, animationData, templateDocument) {
         .playbackRate(data.projectile.options.playbackRate)
         .waitUntilFinished(data.projectile.options.wait)
 
+    const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
+    effect1.onLevels(sourceLevel);
+
     if (data.projectile.options.elevation === 0) {
         effect1.belowTokens(true)
     } else {
@@ -77,6 +80,8 @@ export async function proToTemp(handler, animationData, templateDocument) {
         .playbackRate(data.explosion.options.playbackRate)
         .waitUntilFinished(-750 + data.explosion.options.wait)
         .aboveLighting(data.explosion.options.aboveTemplate)
+
+    effect2.onLevels(sourceLevel);
 
     if (data.explosion.options.elevation === 0) {
         effect2.belowTokens(true)

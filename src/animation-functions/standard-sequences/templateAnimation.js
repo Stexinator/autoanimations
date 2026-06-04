@@ -169,8 +169,8 @@ export async function templatefx(handler, animationData, templateDocument) {
         if (data.options.elevation === 0) {
             seq.belowTokens(true)
         } else {
-            const sourceLevel = (token?.document ?? token)?.level;
-            seq.onLevels([sourceLevel]);
+            const sourceLevel = (token?.document ?? token)?.level ?? canvas.level;
+            seq.onLevels(sourceLevel);
         }
         seq.zIndex(data.options.zIndex)
         seq.rotate(data.options.rotate)

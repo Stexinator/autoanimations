@@ -51,6 +51,9 @@ export async function thunderwave(handler, animationData, config) {
         .size(3, { gridUnits: true })
         .repeats(data.options.repeat, data.options.repeatDelay)
 
+    const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
+    effect.onLevels(sourceLevel);
+
     if (data.options.elevation === 0) {
         effect.belowTokens(true)
     } else {

@@ -75,8 +75,9 @@ export async function range(handler, animationData) {
         if (data.options.elevation === 0) {
             nextSeq.belowTokens(true)
         } else {
-            const sourceLevel = (sourceToken?.document ?? sourceToken)?.level;
-            const targetLevel = (currentTarget?.token?.document ?? currentTarget?.token)?.level;
+            const levels = [];
+            const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
+            const targetLevel = (currentTarget?.token?.document ?? currentTarget?.token)?.level ?? canvas.level;
             nextSeq.onLevels([sourceLevel, targetLevel]);
         }
         nextSeq.zIndex(data.options.zIndex)

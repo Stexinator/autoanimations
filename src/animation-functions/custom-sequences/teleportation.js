@@ -39,6 +39,10 @@ export async function teleportation(handler, animationData) {
     }
 
     let borderSeq = await new Sequence(handler.sequenceData)
+
+    const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
+    borderSeq.onLevels(sourceLevel);
+
     let borderEffect = borderSeq.effect()
         .fadeIn(500)
         .persist()
@@ -125,6 +129,7 @@ export async function teleportation(handler, animationData) {
 
         Sequencer.EffectManager.endEffects({ name: "teleportation" })
 
+        const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
         let aaSeq = new Sequence(handler.sequenceData);
 
         // Play Macro if Awaiting
@@ -150,6 +155,7 @@ export async function teleportation(handler, animationData) {
             startEffect.fadeOut(data.start.options.fadeOut)
             startEffect.delay(data.start.options.delay)
             startEffect.playbackRate(data.start.options.playbackRate)
+            startEffect.onLevels(sourceLevel);
             //startEffect.randomRotation()
             if (data.start.options.isMasked) {
                 startEffect.mask(sourceToken)
@@ -167,6 +173,7 @@ export async function teleportation(handler, animationData) {
             betweenEffect.opacity(data.between.options.opacity)
             betweenEffect.stretchTo({ x: centerPos[0], y: centerPos[1] })
             betweenEffect.playbackRate(data.between.options.playbackRate)
+            betweenEffect.onLevels(sourceLevel);
         }
 
         // End Animation
@@ -180,6 +187,7 @@ export async function teleportation(handler, animationData) {
             endEffect.fadeIn(data.end.options.fadeIn)
             endEffect.fadeOut(data.end.options.fadeOut)
             endEffect.playbackRate(data.end.options.playbackRate)
+            endEffect.onLevels(sourceLevel);
             //endEffect.randomRotation()
             if (data.end.options.isMasked) {
                 endEffect.mask(sourceToken)

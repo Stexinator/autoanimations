@@ -100,8 +100,8 @@ export async function melee(handler, animationData) {
             if (data.options.elevation === 0) {
                 meleeSeq.belowTokens(true)
             } else {
-                const sourceLevel = (sourceToken?.document ?? sourceToken)?.level;
-                const targetLevel = (currentTarget?.token?.document ?? currentTarget?.token)?.level;
+                const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
+                const targetLevel = (currentTarget?.token?.document ?? currentTarget?.token)?.level ?? canvas.level;
                 meleeSeq.onLevels([sourceLevel, targetLevel]);
             }
             meleeSeq.zIndex(data.options.zIndex)

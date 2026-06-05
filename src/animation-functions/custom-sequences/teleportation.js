@@ -41,8 +41,7 @@ export async function teleportation(handler, animationData) {
     let borderSeq = await new Sequence(handler.sequenceData)
 
     const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
-    borderSeq.onLevels(sourceLevel);
-
+    
     let borderEffect = borderSeq.effect()
         .fadeIn(500)
         .persist()
@@ -53,6 +52,8 @@ export async function teleportation(handler, animationData) {
         .forUsers(hideBorder)
         .name("teleportation")
         .opacity(0.75)
+        .onLevels(sourceLevel);
+
     if (borderType === "circle") {
         borderEffect.loopProperty("shapes.teleBorder", "scale.x", { from: 0.98, to: 1.02, duration: 1500, pingPong: true, ease: "easeInOutSine" })
         borderEffect.loopProperty("shapes.teleBorder", "scale.y", { from: 0.98, to: 1.02, duration: 1500, pingPong: true, ease: "easeInOutSine" })    
@@ -129,7 +130,6 @@ export async function teleportation(handler, animationData) {
 
         Sequencer.EffectManager.endEffects({ name: "teleportation" })
 
-        const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
         let aaSeq = new Sequence(handler.sequenceData);
 
         // Play Macro if Awaiting

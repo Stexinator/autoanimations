@@ -35,7 +35,6 @@ export async function dualattach(handler, animationData) {
         })
 
         const sourceLevel = (sourceToken?.document ?? sourceToken)?.level ?? canvas.level;
-        aaSeq.onLevels(sourceLevel);
 
         for (let target of handler.allTargets) {
             let checkTarget = effectExists.filter(i => i.data.target.includes(target.id)).length > 0;

@@ -246,10 +246,10 @@ window.AutomatedAnimations = {
 }
 
 function handleTemplates() {    
-    Hooks.on("preCreateRegion", (region) => {
-        const templatesGridHidden = game.settings.get('autoanimations', 'forceRegionLayerOnly');
-        if (!templatesGridHidden) return;
-        if (!region.flags.core?.MeasuredTemplate) return;
-        region.updateSource({ visibility: 0 });
-    });
+    // Hooks.on("preCreateRegion", (region) => {
+    //     const templatesGridHidden = game.settings.get('autoanimations', 'forceRegionLayerOnly');
+    //     if (!templatesGridHidden) return;
+    //     if (!region.flags.core?.MeasuredTemplate) return;
+    //     region.updateSource({ visibility: 0 });
+    // });
 }

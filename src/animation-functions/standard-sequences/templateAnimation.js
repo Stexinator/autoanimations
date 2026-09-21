@@ -10,6 +10,11 @@ export async function templatefx(handler, animationData, templateDocument) {
     const templateType = template?.shapes?.[0]?.type;
     const templateDistance = template?.shapes?.[0]?.measuredSegments?.[0]?.distance;
 
+    const templatesGridHidden = game.settings.get('autoanimations', 'forceRegionLayerOnly');
+    if (templatesGridHidden) {
+        template.update?.({ visibility: 0 });
+    }
+
     const data = animationData.primary;
     const secondary = animationData.secondary;
     const sourceFX = animationData.sourceFX;
